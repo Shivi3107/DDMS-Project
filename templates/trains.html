@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %} 
+
+   {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul>
+            {% for message in messages %}
+            <li> {{ message }}</li>
+            {% endfor %}
+      </ul>
+      {% endif %}
+   {% endwith %}
+   
+<!-- <form action="/trains" method="post">
+    <input type="text" name="source" value="{{source}}">
+    <input type="text" name="destination" value="{{destination}}">
+    <input type="date" name="date" value="{{date}}">
+    <input type="text" name="class" value="{{tr_class}}">
+    <input type="submit" value="Submit">
+</form> -->
+<div class="main_block">
+    <form action="/trains" method="post">
+  <div class="middle_block">
+     <div class="main_heading">
+         BOOK YOUR TICKET <br>
+         NOW
+     </div>
+
+     <div class="main_entry">
+        <div class="main_username">
+            Boarding Station <br>
+            <input type="text" name="source" list="station-list" value="{{source}}"/>
+            <datalist id="station-list">
+                {% for station in stations %}
+                <option value="{{ station[2] }}">{{ station[1]}} ({{station[2]}}) </option>
+                {% endfor %}
+            </datalist>
+        </div>
+        <div class="main_username">
+            Destination Station <br>
+            <input type="text" name="destination" list="station-list" value="{{destination}}"/>
+            <datalist id="station-list">
+               {% for station in stations %}
+               <option value="{{ station[2] }}">{{ station[1]}} ({{station[2]}}) </option>
+               {% endfor %}
+           </datalist>
+        </div>
+         <div class="main_date">
+             Date <br>
+             <input type="date" name="date" value="{{date}}">
+         </div>
+         <div class="main_username">
+            Class <br>
+            <select name="class" value="{{tr_class}}">
+                {% if classes|length == 0 %}
+                    <option value="{{ tr_class }}">{{ tr_class}}</option>
+                {% else %}
+                    {% for class in classes %}
+                        <option value="{{ class[0] }}">{{ class[0]}}</option>
+                    {% endfor %}
+                {% endif %}
+
+            </select>
+        </div>
+         <div class="main_button">
+             <br>
+             <input class="main_select_button" type="submit" value="Submit">
+         </div>
+     </div>
+ </div>
+
+    </form>
+</div>
+
+<div class="main_block">
+    <h3>Trains Found</h3>
+    <div class="main_entry">
+        <table>
+            <tr>
+                <th>Train Number</th>
+                <th>Source</th>
+                <th>Destination</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>Class - Fare - Seats Available</th>
+                <th>Book</th>
+            </tr>
+        {% for train in trains %} 
+            <tr>
+                <form action="/passenger" method="post">
+                    <td>{{ train[0] }}</td>
+                    <td>{{ train[1] }}</td>
+                    <td>{{ train[3] }}</td>
+                    <td>{{ train[2] }}</td>
+                    <td>{{ train[4] }}</td>
+                    <td>
+                        <select name="class_select" id="cls_sel">
+                            {% for stop in train[5] %}
+                                <option name = "class" value ="{{[ stop[0], stop[1], stop[2] ] }}"> {{stop[0]}} - {{stop[1]}} - {{stop[2]}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="hidden" name="train_no" value="{{ train[0] }}">
+                        <input type="hidden" name="source" value="{{ train[1] }}">
+                        <input type="hidden" name="destination" value="{{ train[3] }}">
+                        <input type="hidden" name="date" value="{{ date }}">
+                        <input type="hidden" name="dep_time" value="{{ train[2] }}">
+                        <input type="hidden" name="arr_time" value="{{ train[4] }}">
+                        
+                        <button type="submit">Book Now</button>
+                    </td>
+                </form>
+            </tr>
+        {% endfor %} 
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %} 
+
+   {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul>
+            {% for message in messages %}
+            <li> {{ message }}</li>
+            {% endfor %}
+      </ul>
+      {% endif %}
+   {% endwith %}
+   
+   <div class="main_block">
+        <form action="/trains" method="post">
+      <div class="middle_block">
+         <div class="main_heading">
+             DISCOVER YOUR <br>
+             NEXT ADVENTURE
+         </div>
+ 
+         <div class="main_entry">
+            <div class="main_username">
+                 Boarding Station <br>
+                 <input type="text" name="source" list="station-list"/>
+                 <datalist id="station-list">
+                     {% for station in stations %}
+                     <option value="{{ station[2] }}">{{ station[1]}} ({{station[2]}}) </option>
+                     {% endfor %}
+                 </datalist>
+            </div>
+             <div class="main_username">
+                 Destination Station <br>
+                 <input type="text" name="destination" list="station-list"/>
+                 <datalist id="station-list">
+                    {% for station in stations %}
+                    <option value="{{ station[2] }}">{{ station[1]}} ({{station[2]}}) </option>
+                    {% endfor %}
+                </datalist>
+             </div>
+             <div class="main_date">
+                 Date <br>
+                 <input type="date" name="date">
+             </div>
+             <div class="main_username">
+                Class <br>
+                <select name="class">
+                    {% for class in classes %}
+                    <option value="{{ class[0] }}">{{ class[0]}}</option>
+                    {% endfor %}
+                 </select>
+             </div>
+             <div class="main_button">
+                 <br>
+                 <input class="main_select_button" type="submit" value="Submit">
+             </div>
+         </div>
+     </div>
+
+        </form>
+    </div>
+
+   <!-- <form action="/index" method="post">
+      input:
+   </form> -->
+
+{% endblock content %}

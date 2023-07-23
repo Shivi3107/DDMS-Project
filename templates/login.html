@@ -1,0 +1,51 @@
+
+{% extends "base.html" %} 
+
+{% block content %} 
+
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if error %}
+         <p><strong>Error:</strong> {{ error }}
+    {% endif %}
+
+    <div class="main_block">
+        <div class="middle_block">
+            <div class="main_heading">
+                SIGNIN <br> 
+                PLEASE LOGIN
+            </div>
+    
+            <div class="main_entry">
+                <form action="" method="post">
+                    <div class="main_username">
+                        <label for="username">Username</label> <br>
+                        <input type="text" name="username" id="username">
+                    </div>
+                    <div class="main_username">
+                        <label for="password">Password</label> <br>
+                        <input type="password" name="password" id="password">
+                    </div>
+                    <div class="main_button">
+                        <!-- <a class="main_select_button" type="submit" href="https://www.google.com/">
+                            Submit
+                        </a> -->
+                        <input class="main_select_button" type="submit" value="Submit">
+                    </div>
+                    
+                    
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
